@@ -1,0 +1,17 @@
+---
+- name: SHOW COMMANDS
+  #hosts: sgsinddc05ir01
+  hosts: '{{ hostname }}'
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Run multiple commands on router
+      ios_command:
+       commands:
+        - '{{ command_input }}'
+      vars:
+       ansible_command_timeout: 40
+      register: print_output
+    - debug: var=print_output.stdout_lines
+

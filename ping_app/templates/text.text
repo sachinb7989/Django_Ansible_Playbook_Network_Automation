@@ -1,0 +1,43 @@
+from django.shortcuts import render, HttpResponse
+from ping_app.models import Devices
+from ping_app.forms import MyForm
+import subprocess, json
+from django.http import HttpResponse, JsonResponse
+
+
+# Create your views here.
+
+def index(request):
+    form = MyForm()
+    if request.method == "POST":
+        form = MyForm(request.POST)
+    if form.is_valid():
+       context = {
+	'form': form
+    }
+    result = subprocess.Popen(
+        ['ansible-playbook', 'show.yaml', '--extra-vars', 'hostname=sgsinddc05ir01', '--extra-vars', 'command_input=show version'],
+        stdout=subprocess.PIPE)
+    output, err = result.communicate()
+    print(output)
+    # if form.is_valid():
+    # process data and return in index.html page
+    return render(request, 'index.html', context)
+    return HttpResponse(output)
+
+
+def post(self, request):
+    form = MyForm(request.POST)
+    if form.is_valid():
+        text = form.cleaned_data['hostname']
+
+    args = {'form': form, 'text': text}
+
+    return render(request, 'index.html', args)
+
+
+def ping(request):
+    device = request.POST.get('device_name')
+    context = {
+        'devices': Devices.object.all
+    }

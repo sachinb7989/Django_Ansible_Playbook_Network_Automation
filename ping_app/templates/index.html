@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+    	{% load static %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Django OSFP Ansible APP</title>
+
+
+        <script type='text/javascript' src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+
+    </head>
+
+<body style="background-color:powderblue;">
+
+<h1> Ping Checks - Automation using Ansible</h1>
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Singapore.svg" alt="sachin" width="200">
+
+<form action="/output/" id="MyForm" method="POST">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    <input type="Submit" value="Submit"/>
+</form>
+
+<div id="outputdiv">
+<table id="outputtable"><th>#</th><th>Command</th><th>Host Name</th><th>Result</th><th>Timestamp</th></table>
+</div>
+
+{% block content %}
+    	{% endblock %}
+
+
+
+    <script type='text/javascript' src="{% static 'js/script.js' %}"></script>
+    </body>
+
+</html>
